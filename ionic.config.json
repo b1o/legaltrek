@@ -1,0 +1,7 @@
+{
+  "name": "legaltrek",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
