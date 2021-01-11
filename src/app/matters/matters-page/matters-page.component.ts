@@ -17,13 +17,14 @@ export class MattersPageComponent implements OnInit {
 
 	ngOnInit() {
 		this.mattersService.getMatters().subscribe((data: any) => {
-			console.log(data);
-			this.matters = data.result;
+			this.matters = Object.keys(data.result.matters).map(key => ({id: key, ...data.result.matters[key]}));
+			console.log(this.matters);
 		});
 	}
 
 	public onMatterSelect(matter) {
 		console.log(matter.id);
+		this.mattersService.currentMatter = matter;
 		this.router.navigateByUrl('/home/matters/' + matter.id);
 	}
 }

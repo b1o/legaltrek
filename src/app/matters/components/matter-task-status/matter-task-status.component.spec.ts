@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { MatterTaskStatusComponent } from './matter-task-status.component';
@@ -7,7 +7,7 @@ describe('MatterTaskStatusComponent', () => {
   let component: MatterTaskStatusComponent;
   let fixture: ComponentFixture<MatterTaskStatusComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MatterTaskStatusComponent ],
       imports: [IonicModule.forRoot()]

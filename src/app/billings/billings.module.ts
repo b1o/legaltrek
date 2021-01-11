@@ -14,7 +14,7 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-	declarations: [BillingDetailPageComponent],
+	declarations: [BillingDetailPageComponent, BillingsPageComponent],
 	imports: [
 		CommonModule,
 		IonicModule,

@@ -1,1 +1,46 @@
-asd
+<ion-content class="ion-padding">
+	<div class="ion-margin-top"  style="background-color: white;" *ngFor="let entry of billings">
+		<ion-title class="ion-no-padding ion-no-margin"
+			>{{ entry.task_name }} |
+			<span style="color: gray; font-size: 14px">{{
+				entry.type_alias
+			}}</span></ion-title
+		>
+		<div class="content ion-margin-top">
+			<div class="description ion-margin-bottom">
+				<ion-label style="display: block">description: </ion-label>
+				<ion-text style="font-weight: bold">{{
+					entry.description
+				}}</ion-text>
+			</div>
+			<div class="hours">
+				<mat-label>Hrs (billable/worked)</mat-label>
+				<ion-text style="font-weight: bold"
+					>{{ entry.spent_time_billable }} /
+					{{ entry.spent_time }}</ion-text
+				>
+			</div>
+			<div class="bottom ion-margin-top">
+				<div class="worked-on">
+					<ion-label
+						>worked on
+						<span style="font-weight: bold">{{
+							entry.created_on
+						}}</span></ion-label
+					>
+				</div>
+				<div class="price">
+					<ion-label
+						>price
+						<span style="font-weight: bold">{{
+							entry.price
+						}}</span></ion-label
+					>
+				</div>
+			</div>
+		</div>
+		<ion-item-divider
+			class="ion-no-padding ion-no-margin"
+		></ion-item-divider>
+	</div>
+</ion-content>

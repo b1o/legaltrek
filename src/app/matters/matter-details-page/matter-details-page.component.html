@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar>
-		<ion-title>
-			{{ details.searchable }}
+		<ion-title collapse="condense">
+			{{ details?.matter }}
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -12,7 +12,7 @@
 			<app-notes></app-notes>
 		</ion-card>
 		<ion-card>
-			<app-tasks></app-tasks>
+			<app-tasks [tasks]="details?.tasks"></app-tasks>
 		</ion-card>
 		<ion-card>
 			<app-time-entries></app-time-entries>

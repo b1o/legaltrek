@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { MatterTaskStatus } from '../../models/matter-task-status';
+import { MatterTaskLabelMap, MatterTaskStatus } from '../../models/matter-task-status';
 import { MapType } from '@angular/compiler';
 import { ActionSheetController } from '@ionic/angular';
 import { MattersService } from '../../matters.service';
@@ -11,6 +11,7 @@ import { MattersService } from '../../matters.service';
 })
 export class MatterTaskStatusComponent implements OnInit {
 	TaskStatus = MatterTaskStatus;
+	LabelMap = MatterTaskLabelMap;
 
 	@Input() status: MatterTaskStatus = MatterTaskStatus.PENDING;
 
@@ -26,7 +27,7 @@ export class MatterTaskStatusComponent implements OnInit {
 	ngOnInit() {}
 
 	get buttonColor() {
-		switch (this.status) {
+		switch (this.LabelMap[this.status]) {
 			case MatterTaskStatus.DONE:
 				return 'success';
 

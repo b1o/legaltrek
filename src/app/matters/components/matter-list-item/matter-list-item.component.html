@@ -5,7 +5,12 @@
 	</ion-item-options>
 
 	<ion-item (click)="clicked()">
-		<ion-label>{{ matter.searchable }}</ion-label>
+		<ion-label
+			><p>
+				<small>{{ matter.client }}</small>
+			</p>
+			{{ matter.matter }}
+		</ion-label>
 	</ion-item>
 
 	<ion-item-options side="end">

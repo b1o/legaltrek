@@ -3,3 +3,8 @@ export enum MatterTaskStatus {
 	IN_PROGRESS,
 	DONE,
 }
+
+export const MatterTaskLabelMap = {
+	'Свършено': MatterTaskStatus.DONE,
+	'В процес': MatterTaskStatus.IN_PROGRESS
+}

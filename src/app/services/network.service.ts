@@ -31,7 +31,6 @@ export class NetworkService {
 	}
 
 	private parseResponse(response: HTTPResponse) {
-		console.log(response.data);
 		let result;
 		return JSON.parse(response.data);
 	}

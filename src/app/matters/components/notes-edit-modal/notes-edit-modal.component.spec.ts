@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { NotesEditModalComponent } from './notes-edit-modal.component';
@@ -7,7 +7,7 @@ describe('NotesEditModalComponent', () => {
   let component: NotesEditModalComponent;
   let fixture: ComponentFixture<NotesEditModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NotesEditModalComponent ],
       imports: [IonicModule.forRoot()]

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { ActionSheetController, IonTabs } from '@ionic/angular';
 import { TimerService } from '../services/timer.service';
 
 @Component({
@@ -8,9 +9,25 @@ import { TimerService } from '../services/timer.service';
 	styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-	constructor(private timerService: TimerService) {}
+	private resetTabStack = ['matters', 'billings', 'calendar'];
+
+	constructor(private timerService: TimerService, private router: Router) {}
 
 	timerClicked() {
 		this.timerService.openTimerSheet();
+	}
+
+	@ViewChild('tabs') tabs: IonTabs;
+
+	public openTab(event: MouseEvent) {
+		const { tab } = event
+			.composedPath()
+			.find(
+				(element: any) => element.tagName === 'ION-TAB-BUTTON'
+			) as EventTarget & { tab: string };
+
+		if (this.resetTabStack.includes(tab)) {
+			this.router.navigate(['home/' + tab]);
+		}
 	}
 }

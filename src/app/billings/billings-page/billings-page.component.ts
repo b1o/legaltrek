@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { keys } from 'underscore';
+import { BillingsService } from '../billings.service';
 
 @Component({
   selector: 'app-billings-page',
@@ -7,8 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BillingsPageComponent implements OnInit {
 
-  constructor() { }
+  public billings = [];
 
-  ngOnInit() {}
+  constructor(private billingsService: BillingsService) { }
+
+  ngOnInit() {
+    this.billingsService.getBillings()
+      .subscribe(res => {
+        console.log(res)
+        this.billings = Object.keys(res.result.billings).map(key => ({id: key, ...res.result.billings[key]}));
+      })
+  }
 
 }

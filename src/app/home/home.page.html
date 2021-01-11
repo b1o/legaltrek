@@ -3,19 +3,19 @@
 </ion-header>
 
 <ion-content>
-	<ion-tabs>
+	<ion-tabs #tabs>
 		<ion-tab-bar slot="top">
-			<ion-tab-button tab="matters">
+			<ion-tab-button (click)="openTab($event)" tab="matters">
 				<ion-icon name="bookmark"></ion-icon>
 				<ion-label>Matters</ion-label>
 			</ion-tab-button>
 
-			<ion-tab-button tab="billings">
+			<ion-tab-button (click)="openTab($event)" tab="billings">
 				<ion-icon name="logo-usd"></ion-icon>
 				<ion-label>Billings</ion-label>
 			</ion-tab-button>
 
-			<ion-tab-button tab="calendar">
+			<ion-tab-button (click)="openTab($event)" tab="calendar">
 				<ion-icon name="calendar"></ion-icon>
 				<ion-label>Calendar</ion-label>
 			</ion-tab-button>
@@ -25,10 +25,18 @@
 	<ion-fab vertical="bottom" horizontal="end">
 		<ion-fab-button><ion-icon name="add"></ion-icon></ion-fab-button>
 		<ion-fab-list side="top">
-			<ion-fab-button routerLink="/home/matters/add" color="primary" data-desc="Matter">
+			<ion-fab-button
+				routerLink="/home/matters/add"
+				color="primary"
+				data-desc="Matter"
+			>
 				<ion-icon name="bookmarks"></ion-icon>
 			</ion-fab-button>
-			<ion-fab-button  routerLink="/home/billings/add" color="primary" data-desc="Billing">
+			<ion-fab-button
+				routerLink="/home/billings/add"
+				color="primary"
+				data-desc="Billing"
+			>
 				<ion-icon name="logo-usd"></ion-icon>
 			</ion-fab-button>
 			<ion-fab-button

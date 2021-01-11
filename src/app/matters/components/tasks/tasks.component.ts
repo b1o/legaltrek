@@ -3,6 +3,8 @@ import { MatterTaskStatus } from '../../models/matter-task-status';
 import { range, random } from 'underscore';
 import { createTestTask } from '../../models/matter-task';
 import { MattersService } from '../../matters.service';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-tasks',
@@ -12,11 +14,19 @@ import { MattersService } from '../../matters.service';
 export class TasksComponent implements OnInit {
 	public TaskStatus = MatterTaskStatus;
 
-	@Input() tasks = range(Math.floor(random(7, 10))).map((_) =>
-		createTestTask()
-	);
+	@Input() tasks = [];
 
-	constructor() {}
+	constructor(private matterService: MattersService) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		const requests = this.tasks.map((t) =>
+			this.matterService
+				.getTaskById(t.task_id)
+				.pipe(map((res) => res.result))
+		);
+		forkJoin(requests).subscribe((data) => {
+			this.tasks = data;
+			console.log(this.tasks)
+		});
+	}
 }
