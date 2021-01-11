@@ -1,0 +1,8 @@
+<ion-button (click)="openSheet()" [color]="buttonColor">
+	<ion-spinner
+		*ngIf="loading"
+		style="width: 16px; height: 16px; margin-right: 3px;"
+		class="spinner"
+	></ion-spinner>
+	<ion-label> {{ TaskStatus[status] }}</ion-label>
+</ion-button>

@@ -1,3 +1,112 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+	<ion-menu side="start" menuId="settings" contentId="main">
+		<ion-header>
+			<ion-toolbar color="primary">
+				<ion-title>Settings</ion-title>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content class="sidemenu-container">
+			<ion-list>
+				<!-- <ion-menu-toggle [autoHide]="true">
+					<ion-item [lines]="'none'" routerLink="/auth/login"
+						>Login</ion-item
+					>
+					<ion-item [lines]="'none'" routerLink="/auth/reset-password"
+						>Forgot Password</ion-item
+					>
+					<ion-item [lines]="'none'" routerLink="/home"
+						>Home</ion-item
+					>
+        </ion-menu-toggle> -->
+				<ion-item>
+					<ion-label>Language</ion-label>
+					<ion-select value="bg" okText="Okay" cancelText="Dismiss">
+						<ion-select-option value="bg"
+							>English</ion-select-option
+						>
+						<ion-select-option value="en"
+							>Bulgarian</ion-select-option
+						>
+					</ion-select>
+				</ion-item>
+				<ion-item>
+					<ion-label>Notifications</ion-label>
+					<ion-toggle></ion-toggle>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>Timer bubble</ion-label>
+					<ion-toggle></ion-toggle>
+				</ion-item>
+			</ion-list>
+			<div class="spacer"></div>
+			<ion-button
+				(click)="logout()"
+				class="ion-justify-self-end"
+				expand="full"
+				color="primary"
+				>Logout <ion-icon name="log-out" slot="end"></ion-icon
+			></ion-button>
+		</ion-content>
+	</ion-menu>
+
+	<ion-header text-center class="ion-no-border">
+		<ion-toolbar color="primary">
+			<ion-back-button [icon]="'home'" slot="start"></ion-back-button>
+			<ion-buttons slot="end">
+				<ion-button (click)="toggleSearchBar()">
+					<ion-icon
+						name="{{ showSearchBar ? 'close' : 'search' }}"
+					></ion-icon>
+				</ion-button>
+				<ion-button (click)="toggleSideMenu()">
+					<ion-icon name="settings"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+
+			<ion-title [color]="timerService.isPaused ? 'warning' : 'light'">
+				<div *ngIf="!timerService.isPaused && !timerService.isRunning">
+					Legaltrek
+				</div>
+				<div
+					style="display: flex; align-items: center;"
+					*ngIf="timerService.isPaused || timerService.isRunning"
+				>
+					{{ timerService.timerFormatted }}
+					<ion-icon
+						(click)="timerService.startTimer()"
+						*ngIf="timerService.isPaused"
+						name="play"
+					></ion-icon>
+					<ion-icon
+						(click)="timerService.pauseTimer()"
+						*ngIf="timerService.isRunning && !timerService.isPaused"
+						name="pause"
+					></ion-icon>
+					<ion-icon
+						(click)="timerService.confirmTimerStop()"
+						*ngIf="timerService.isRunning || timerService.isPaused"
+						name="stop"
+					></ion-icon>
+				</div>
+			</ion-title>
+		</ion-toolbar>
+		<ion-toolbar *ngIf="showSearchBar" color="primary">
+			<ion-searchbar
+				[debounce]="300"
+				(ionChange)="search($event)"
+				animated
+			></ion-searchbar>
+				<ion-list
+					style="max-height: 300px; width: 97%; overflow-y: scroll; border: 1px solid; margin: 0 auto"
+					*ngIf="showSearchBar && searchResults.length > 0"
+				>
+					<ion-item *ngFor="let item of searchResults">{{
+						item.name
+					}}</ion-item>
+				</ion-list>
+		</ion-toolbar>
+	</ion-header>
+
+	<ion-router-outlet style="margin-top: 76px;" id="main"></ion-router-outlet>
 </ion-app>

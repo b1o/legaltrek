@@ -1,0 +1,42 @@
+<mat-expansion-panel>
+	<mat-expansion-panel-header>
+		<mat-panel-title>
+			<ion-badge style="margin-right: 5px;">{{
+				timeEntries.length
+			}}</ion-badge>
+			Time Entries
+		</mat-panel-title>
+	</mat-expansion-panel-header>
+
+	<div class="ion-margin-top" *ngFor="let entry of timeEntries">
+		<ion-title class="ion-no-padding ion-no-margin">{{
+			entry.name 
+		}} | <span style="color: gray; font-size: 14px;">{{entry.type}}</span></ion-title>
+		<div class="content ion-margin-top">
+			<div
+				class="description ion-margin-bottom"
+			>
+				<ion-label style="display: block;">description: </ion-label>
+				<ion-text style="font-weight: bold;">{{
+					entry.description
+				}}</ion-text>
+			</div>
+			<div class="hours">
+				<mat-label>Hrs (billable/worked)</mat-label>
+				<ion-text style="font-weight: bold;"
+					>{{ entry.hoursBillable | date:'hh\'h\' mm\'m\''}} /
+					{{ entry.hoursWorked | date:'hh\'h\' mm\'m\''}}</ion-text
+				>
+			</div>
+			<div class="bottom ion-margin-top">
+				<div class="worked-on">
+					<ion-label>worked on <span style="font-weight: bold;">{{entry.workedOn | date:'dd MMM yyyy'}}</span></ion-label>
+				</div>
+				<div class="price">
+					<ion-label>price <span style="font-weight: bold;">{{entry.price | currency:entry.currency}}</span></ion-label>
+				</div>
+			</div>
+		</div>
+		<ion-item-divider class="ion-no-padding ion-no-margin"></ion-item-divider>
+	</div>
+</mat-expansion-panel>

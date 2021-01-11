@@ -1,0 +1,17 @@
+<ion-content>
+
+	<div class="list-header">
+		<ion-label
+			>Showing {{ matters.length }}
+			{{ matters.length == 1 ? 'matter' : 'matters' }}</ion-label
+		>
+	</div>
+	<ion-list>
+		<app-matter-list-item
+			(select)="onMatterSelect($event)"
+			*ngFor="let matter of matters"
+			[matter]="matter"
+		>
+		</app-matter-list-item>
+	</ion-list>
+</ion-content>

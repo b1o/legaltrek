@@ -1,0 +1,31 @@
+<mat-expansion-panel>
+	<mat-expansion-panel-header>
+		<mat-panel-title>
+			<ion-badge style="margin-right: 5px;">{{ tasks.length }}</ion-badge>
+			Tasks
+		</mat-panel-title>
+	</mat-expansion-panel-header>
+
+	<ion-list>
+		<ion-item
+			style="width: 100%;"
+			class="item-text-wrap ion-no-padding ion-no-margin"
+			[lines]="'none'"
+			*ngFor="let task of tasks"
+		>
+			<ion-label>
+				<div style="text-overflow: ellipsis;">
+					{{ task.startDate | date: 'dd.M.yyyy':'undefined':'bg_BG' }}
+					{{ task.name }}
+				</div>
+				<div>
+					<strong>{{ task.assignetTo }}</strong>
+				</div>
+			</ion-label>
+			<app-matter-task-status
+				slot="end"
+				[status]="task.status"
+			></app-matter-task-status>
+		</ion-item>
+	</ion-list>
+</mat-expansion-panel>

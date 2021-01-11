@@ -1,0 +1,30 @@
+<ion-header>
+	<ion-toolbar color="primary">
+		<ion-title>Edit Notes</ion-title>
+		<ion-buttons slot="end">
+			<ion-button fill="clear"
+				><ion-icon name="close"></ion-icon
+			></ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<mat-form-field style="width: 100%;">
+		<textarea
+			[formControl]="notesFormControl"
+			matInput
+			cdkTextareaAutosize
+		></textarea>
+	</mat-form-field>
+</ion-content>
+<ion-footer>
+	<ion-toolbar class="ion-padding-horizontal">
+		<ion-button (click)="close()" fill="clear">
+			Cancel
+		</ion-button>
+		<ion-button (click)="dismiss()" slot="end">
+			Save
+		</ion-button>
+	</ion-toolbar>
+</ion-footer>

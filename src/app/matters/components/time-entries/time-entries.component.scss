@@ -1,0 +1,9 @@
+.content {
+	display: flex;
+	flex-direction: column;
+}
+
+.hours, .bottom {
+    display: flex;
+    justify-content: space-between;
+}

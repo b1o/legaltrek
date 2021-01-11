@@ -1,0 +1,23 @@
+<ion-content class="ion-padding">
+  <ion-text><h2>Add Matter</h2></ion-text>
+
+	<form [formGroup]="form">
+    <ion-item style="border: 1px solid; border-radius: 5px;">
+      <ion-label position="floating">Matter</ion-label>
+      <ion-textarea formControlName="matter" autoGrow="true"></ion-textarea>
+    </ion-item>
+  
+    <ion-item class="ion-border  ion-margin-top" lines="none" style="border: 1px solid; border-radius: 5px;">
+      <ion-label>Client</ion-label>
+      <ion-select formControlName="client" interface="action-sheet" placeholder="Select client">
+        <ion-select-option [value]="'INVOICING'" >INVOICING</ion-select-option>
+        <ion-select-option [value]="'ACCOUNTING'">ACCOUNTING</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </form>
+
+	<div class="actions ion-margin-top" style="display: flex; justify-content: space-between;">
+		<ion-button (click)="cancel()" fill="outline" >Cancel</ion-button>
+		<ion-button (click)="add()" >Add</ion-button>
+	</div>
+</ion-content>

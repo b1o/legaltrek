@@ -10,17 +10,46 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+@import '~@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
 @import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+.no-shadow:after {
+	background-image: none;
+}
+
+.spinner svg {
+	width: 12px !important;
+	height: 12px !important;
+}
+
+ion-fab-button[data-desc] {
+	position: relative;
+}
+
+ion-fab-button[data-desc]::after {
+	position: absolute;
+	content: attr(data-desc);
+	z-index: 1;
+	right: 43px;
+	bottom: 4px;
+	background-color: var(--ion-color-primary-shade);
+	padding: 9px;
+	border-radius: 15px;
+	color: white;
+	// box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+	// 	0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+	box-shadow: var(--box-shadow);
+}

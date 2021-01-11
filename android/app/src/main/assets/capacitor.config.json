@@ -1,0 +1,17 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "legaltrek",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {},
+  "server": {
+    "url": "http://172.17.144.1:8100",
+    "cleartext": true
+  }
+}

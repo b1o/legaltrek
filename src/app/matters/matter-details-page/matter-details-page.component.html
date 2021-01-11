@@ -1,0 +1,25 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+			{{ details.searchable }}
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<mat-accordion [displayMode]="'flat'">
+		<ion-card class="ion-no-padding">
+			<app-notes></app-notes>
+		</ion-card>
+		<ion-card>
+			<app-tasks></app-tasks>
+		</ion-card>
+		<ion-card>
+			<app-time-entries></app-time-entries>
+		</ion-card>
+
+		<ion-card>
+			<app-expenses></app-expenses>
+		</ion-card>
+	</mat-accordion>
+</ion-content>
