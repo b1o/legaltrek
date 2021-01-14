@@ -6,20 +6,19 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
-	<mat-accordion [displayMode]="'flat'">
-		<ion-card class="ion-no-padding">
+<ion-content >
+	<mat-accordion >
+		<div class="ion-padding-horizontal ion-padding-top">
 			<app-notes></app-notes>
-		</ion-card>
-		<ion-card>
+		</div>
+		<div class="ion-padding-horizontal ion-padding-top">
 			<app-tasks [tasks]="details?.tasks"></app-tasks>
-		</ion-card>
-		<ion-card>
+		</div>
+		<div class="ion-padding-horizontal ion-padding-top">
 			<app-time-entries></app-time-entries>
-		</ion-card>
-
-		<ion-card>
-			<app-expenses></app-expenses>
-		</ion-card>
+		</div>
+		<div class="ion-padding-horizontal ion-padding-top">
+			<app-expenses [expenses]="details?.billings"></app-expenses>
+		</div>
 	</mat-accordion>
 </ion-content>

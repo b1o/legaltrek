@@ -30,8 +30,6 @@ export class AppComponent {
 
 	initializeApp() {
 		this.platform.ready().then(() => {
-			this.statusBar.styleDefault();
-			this.splashScreen.hide();
 		});
 	}
 
@@ -56,6 +54,6 @@ export class AppComponent {
 	search(event) {
 		const term = event.detail.value;
 		this.matterService.search(term)
-			.subscribe(data => this.searchResults = data)
+			.subscribe((data: any) => this.searchResults = data)
 	}
 }

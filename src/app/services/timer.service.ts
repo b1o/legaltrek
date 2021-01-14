@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import {
 	ActionSheetController,
@@ -6,6 +6,12 @@ import {
 	AlertController,
 } from '@ionic/angular';
 import { NetworkService } from './network.service';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import {
+	ILocalNotificationActionType,
+	LocalNotifications,
+} from '@ionic-native/local-notifications/ngx';
+import { MattersService } from '../matters/matters.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -20,20 +26,79 @@ export class TimerService {
 	private ticker = interval(1000);
 	private tickerSub: Subscription;
 
+	private pausedButtons = [
+		{
+			id: 'resume',
+			title: 'Resume',
+			icon: 'res://resume',
+			foreground: true,
+		},
+		{
+			foreground: true,
+			id: 'stop',
+			title: 'Stop',
+			icon: 'res://stop',
+		},
+	];
+
+	private defaultButtons = [
+		{
+			id: 'pause',
+			title: 'Pause',
+			icon: 'res://pause',
+			foreground: true,
+		},
+		{
+			foreground: true,
+			id: 'stop',
+			title: 'Stop',
+			icon: 'res://stop',
+		},
+	];
+
 	constructor(
 		private actionSheetController: ActionSheetController,
 		private network: NetworkService,
-		private alertController: AlertController
+		private alertController: AlertController,
+		private backgroundMode: BackgroundMode,
+		private localNotifications: LocalNotifications,
+		private zone: NgZone,
+		private matterService: MattersService
 	) {
 		this.toTimerFormat();
+		this.pauseTimer = this.pauseTimer.bind(this);
+		this.stopTimer = this.stopTimer.bind(this);
+		this.startTimer = this.startTimer.bind(this);
+		this.confirmTimerStop = this.confirmTimerStop.bind(this);
+		this.localNotifications.on('pause').subscribe((data) =>
+			this.zone.run((_) => {
+				this.pauseTimer();
+			})
+		);
+
+		this.localNotifications
+			.on('stop')
+			.subscribe((data) => this.zone.run(() => this.confirmTimerStop()));
+
+		this.localNotifications.on('resume').subscribe((data) =>
+			this.zone.run((_) => {
+				this.startTimer();
+			})
+		);
 	}
 
 	private tick() {
 		this.timer++;
+
 		this.toTimerFormat();
+		this.localNotifications.update({
+			id: 1,
+			text: this.timerFormatted,
+		});
 	}
 
 	async confirmTimerStop() {
+		this.backgroundMode.moveToForeground();
 		const alert = await this.alertController.create({
 			header: 'Save timer?',
 			message: 'Do you wish to save this timer?',
@@ -41,7 +106,7 @@ export class TimerService {
 				{
 					text: 'No',
 					role: 'cancel',
-					handler: () => this.saveTimer()
+					handler: () => this.saveTimer(),
 				},
 				{
 					text: 'Yes',
@@ -56,7 +121,7 @@ export class TimerService {
 	private saveTimer() {
 		// TODO: save timer
 
-		this.stopTimer()
+		this.stopTimer();
 	}
 
 	async openTimerSheet() {
@@ -124,33 +189,48 @@ export class TimerService {
 	}
 
 	public startTimer() {
-		this.network
-			.post('/timers/stat', { name: 'timer' })
-			.subscribe((data) => {
-				this.isRunning = true;
-				this.isPaused = false;
-				console.log(data);
+		this.isRunning = true;
+		this.isPaused = false;
+		this.localNotifications.schedule({
+			id: 1,
+			title: this.matterService.currentMatter
+				? this.matterService.currentMatter.matter
+				: null,
+			text: this.timerFormatted,
+			autoClear: false,
+			lockscreen: true,
+			sticky: true,
+			vibrate: false,
+			actions: this.defaultButtons,
+		});
 
-				this.tickerSub = this.ticker.subscribe(() => this.tick());
-			});
+		// this.backgroundMode.on('enable').subscribe(() => {
+		// 	console.log('background  mode');
+
+		// });
+		this.tickerSub = this.ticker.subscribe(() => this.tick());
+		this.backgroundMode.enable();
 	}
 
 	public stopTimer() {
-		this.network
-			.post('/timers/delete', { id: this.currentTimerId })
-			.subscribe((data) => {
-				this.isRunning = false;
-				this.isPaused = false;
-				this.timer = 0;
-				this.toTimerFormat()
-				this.currentTimerId = null;
-				this.tickerSub.unsubscribe();
-			});
+		this.isRunning = false;
+		this.isPaused = false;
+		this.timer = 0;
+		this.toTimerFormat();
+		this.currentTimerId = null;
+		this.tickerSub.unsubscribe();
+		this.backgroundMode.disable();
+
+		this.localNotifications.clear(1);
 	}
 
 	public pauseTimer() {
 		this.isRunning = false;
 		this.isPaused = true;
+		this.localNotifications.update({
+			id: 1,
+			actions: this.pausedButtons,
+		});
 		this.tickerSub.unsubscribe();
 	}
 }

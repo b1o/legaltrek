@@ -15,6 +15,8 @@ import { HTTP } from '@ionic-native/http/ngx';
 //locale
 import { registerLocaleData } from '@angular/common';
 import localeBg from '@angular/common/locales/bg';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 registerLocaleData(localeBg);
 
 @NgModule({
@@ -28,7 +30,9 @@ registerLocaleData(localeBg);
 		HttpClientModule,
 	],
 	providers: [
+		BackgroundMode,
 		StatusBar,
+		LocalNotifications,
 		SplashScreen,
 		HTTP,
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

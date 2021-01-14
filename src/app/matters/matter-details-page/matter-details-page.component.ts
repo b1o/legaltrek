@@ -17,15 +17,15 @@ export class MatterDetailsPageComponent implements OnInit, OnDestroy {
 		private mattersService: MattersService,
 		private router: Router
 	) {
-		this.route.paramMap.subscribe((params) => {
-			this.matterId = params.get('id');
-			// this.mattersService
-			// 	.getMatterDetails(this.matterId)
-			// 	.subscribe((data: any) => {
-			// 		console.log(data);
-			// 		this.details = data.result[0];
-			// 	});
-		});
+		// this.route.paramMap.subscribe((params) => {
+		// 	this.matterId = params.get('id');
+		// 	// this.mattersService
+		// 	// 	.getMatterDetails(this.matterId)
+		// 	// 	.subscribe((data: any) => {
+		// 	// 		console.log(data);
+		// 	// 		this.details = data.result[0];
+		// 	// 	});
+		// });
 	}
 
 	ngOnInit() {

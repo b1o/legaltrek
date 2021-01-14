@@ -14,6 +14,7 @@ import { MatterTaskStatusComponent } from './components/matter-task-status/matte
 import { NotesEditModalComponent } from './components/notes-edit-modal/notes-edit-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddMatterPageComponent } from './add-matter-page/add-matter-page.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Route[] = [
 	{ path: '', component: MattersPageComponent },
@@ -40,6 +41,7 @@ const routes: Route[] = [
 		ReactiveFormsModule,
 		RouterModule.forChild(routes),
 		MaterialModule,
+		SharedModule
 	],
 })
 export class MattersModule {}

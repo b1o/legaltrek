@@ -1,12 +1,17 @@
-<mat-expansion-panel>
+<mat-expansion-panel style="position: relative">
 	<mat-expansion-panel-header>
+		<mat-progress-bar
+			mode="indeterminate"
+			style="position: absolute; top: 0; left: 0; width: 100%"
+			*ngIf="loading"
+		></mat-progress-bar>
 		<mat-panel-title>
-			<ion-badge style="margin-right: 5px">{{ tasks.length }}</ion-badge>
+			<ion-badge style="margin-right: 5px">{{ tasks?.length }}</ion-badge>
 			Tasks
 		</mat-panel-title>
 	</mat-expansion-panel-header>
 
-	<ion-list>
+	<ion-list *ngIf="!loading">
 		<ion-item-group *ngFor="let task of tasks">
 			<ion-item
 				style="width: 100%"

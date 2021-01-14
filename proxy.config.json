@@ -1,0 +1,12 @@
+{
+    "/backend/*": {
+      "target": "https://bg.app.legaltrek.com/",
+      "secure": true,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/backend": ""
+      }
+    }
+  }
+  

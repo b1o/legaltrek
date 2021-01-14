@@ -15,7 +15,7 @@ export class BillingsPageComponent implements OnInit {
 
   ngOnInit() {
     this.billingsService.getBillings()
-      .subscribe(res => {
+      .subscribe((res: any) => {
         console.log(res)
         this.billings = Object.keys(res.result.billings).map(key => ({id: key, ...res.result.billings[key]}));
       })

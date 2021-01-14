@@ -1,7 +1,19 @@
-<mat-expansion-panel>
+<mat-expansion-panel style="position: relative">
 	<mat-expansion-panel-header>
+		<mat-progress-bar
+			mode="indeterminate"
+			style="position: absolute; top: 0; left: 0; width: 100%"
+			*ngIf="loading"
+		></mat-progress-bar>
 		<mat-panel-title>
+			<ion-badge style="margin-right: 5px">{{
+				expenses?.length
+			}}</ion-badge>
 			Expenses
 		</mat-panel-title>
 	</mat-expansion-panel-header>
+
+	<div *ngFor="let expense of expenses">
+		
+	</div>
 </mat-expansion-panel>
