@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">legaltrek</string>
-    <string name="title_activity_main">legaltrek</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">Legaltrek</string>
+    <string name="title_activity_main">Legaltrek</string>
+    <string name="package_name">com.infinno.legaltrek</string>
+    <string name="custom_url_scheme">com.infinno.legaltrek</string>
 </resources>

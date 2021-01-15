@@ -1,24 +1,27 @@
 <ion-header>
 	<ion-toolbar>
 		<ion-title collapse="condense">
-			{{ details?.matter }}
+			{{ details?.name }}
 		</ion-title>
 	</ion-toolbar>
 </ion-header>
 
-<ion-content >
-	<mat-accordion >
+<ion-content>
+	<mat-accordion>
 		<div class="ion-padding-horizontal ion-padding-top">
 			<app-notes></app-notes>
 		</div>
 		<div class="ion-padding-horizontal ion-padding-top">
-			<app-tasks [tasks]="details?.tasks"></app-tasks>
+			<app-tasks [tasks]="tasks"></app-tasks>
 		</div>
 		<div class="ion-padding-horizontal ion-padding-top">
 			<app-time-entries></app-time-entries>
 		</div>
 		<div class="ion-padding-horizontal ion-padding-top">
-			<app-expenses [expenses]="details?.billings"></app-expenses>
+			<app-expenses
+				[loading]="loadingBillings"
+				[expenses]="expenses"
+			></app-expenses>
 		</div>
 	</mat-accordion>
 </ion-content>

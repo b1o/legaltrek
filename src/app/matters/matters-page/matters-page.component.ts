@@ -17,7 +17,7 @@ export class MattersPageComponent implements OnInit {
 
 	ngOnInit() {
 		this.mattersService.getMatters().subscribe((data: any) => {
-			this.matters = Object.keys(data.result.matters).map(key => ({id: key, ...data.result.matters[key]}));
+			this.matters = Object.keys(data.matters).map(key => ({id: key, ...data.matters[key]}));
 			console.log(this.matters);
 		});
 	}

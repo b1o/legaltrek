@@ -9,26 +9,11 @@ import { BillingsService } from 'src/app/billings/billings.service';
 	styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
-	public loading = false;
-
 	@Input() expenses = [];
+	@Input() loading = false;
 
-	constructor(private billings: BillingsService) {}
+	constructor() {}
 
 	ngOnInit() {
-		if (this.expenses.length) {
-			this.loading = true;
-			const requests = this.expenses.map((b) =>
-				this.billings
-					.getBillingById(b.id)
-					.pipe(map((res: any) => res.result.billing))
-			);
-
-			forkJoin(requests).subscribe((data) => {
-				this.expenses = data;
-				console.log(data);
-				this.loading = false;
-			});
-		}
 	}
 }

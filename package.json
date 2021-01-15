@@ -24,6 +24,7 @@
     "@angular/router": "~11.0.7",
     "@capacitor/android": "^2.4.6",
     "@capacitor/core": "^2.4.6",
+    "@capacitor/ios": "^2.2.1",
     "@ionic-native/background-mode": "^5.30.0",
     "@ionic-native/core": "^5.0.7",
     "@ionic-native/foreground-service": "^5.30.0",

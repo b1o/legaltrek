@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
 import { empty, from, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -18,37 +18,49 @@ export class NetworkService {
 		private toastController: ToastController
 	) {}
 
-	public get<T>(path, params?: { [key: string]: any }) {
+	public get(path, params?: { [key: string]: any }) {
 		const request = this.http.get(this.makeUrl(path));
 
 		return request.pipe(
-			// map(this.parseResponse),
-			catchError((err) => this.presentToast(err))
+			catchError((err) => this.onError(err)),
+			switchMap((res) => this.parseResponse(res))
 		);
 	}
 
-	public post<T>(path, body) {
+	public post(path, body) {
 		const request = this.http.post(this.makeUrl(path), body, {});
 
-		return request.pipe(catchError((err) => this.presentToast(err)));
+		return request.pipe(
+			catchError((err) => this.onError(err)),
+			switchMap((res) => this.parseResponse(res))
+		);
 	}
 
-	private parseResponse(response: HTTPResponse) {
-		let result;
-		return JSON.parse(response.data);
+	private parseResponse(response) {
+		if (!response.success) {
+			this.presentToast(`Server error: ${response.result.message}`);
+			return throwError(response.result);
+		}
+		return of(response.result);
 	}
 
 	private makeUrl(path) {
 		return this.baseUrl + path;
 	}
 
-	private async presentToast(error) {
-		console.log(error);
+	private async onError(err) {
 		const toast = await this.toastController.create({
-			message: error.message,
-			duration: 2000,
+			message: err.message,
+			buttons: ['OK'],
 		});
 		toast.present();
-		return empty();
+	}
+
+	private async presentToast(message) {
+		const toast = await this.toastController.create({
+			message,
+			buttons: ['OK'],
+		});
+		toast.present();
 	}
 }

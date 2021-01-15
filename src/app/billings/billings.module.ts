@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { Route, RouterModule } from '@angular/router';
 import { AddBillingPageComponent } from './add-billing-page/add-billing-page.component';
 import { BillingsPageComponent } from './billings-page/billings-page.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Route[] = [
 	{ path: '', component: BillingsPageComponent },
@@ -21,6 +22,7 @@ const routes: Route[] = [
 		ReactiveFormsModule,
 		RouterModule.forChild(routes),
 		MaterialModule,
+		SharedModule,
 	],
 })
 export class BillingsModule {}

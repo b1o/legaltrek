@@ -24,23 +24,10 @@ export class TasksComponent implements OnInit {
 	@Input() tasks = [];
 
 	constructor(
-		private matterService: MattersService,
-		private cd: ChangeDetectorRef
+	
 	) {}
 
 	ngOnInit() {
-		if (this.tasks.length) {
-			this.loading = true;
-			const requests = this.tasks.map((t) =>
-				this.matterService
-					.getTaskById(t.task_id)
-					.pipe(map((res: any) => res.result))
-			);
-			forkJoin(requests).subscribe((data) => {
-				this.tasks = data;
-				this.loading = false;
-				console.log(this.tasks);
-			});
-		}
+	
 	}
 }
