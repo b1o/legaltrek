@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -10,7 +10,8 @@ import { MattersService } from '../matters.service';
 	templateUrl: './matter-details-page.component.html',
 	styleUrls: ['./matter-details-page.component.scss'],
 })
-export class MatterDetailsPageComponent implements OnInit, OnDestroy {
+export class MatterDetailsPageComponent
+	implements OnInit, OnDestroy, AfterViewInit {
 	public matterId;
 
 	public details: any = {};
@@ -23,21 +24,17 @@ export class MatterDetailsPageComponent implements OnInit, OnDestroy {
 		private billingService: BillingsService,
 		private router: Router
 	) {
-		this.route.paramMap.subscribe((params) => {
-			this.matterId = params.get('id');
-			this.mattersService.getMatterDetails(this.matterId).subscribe(
-				(data: any) => {
-					this.details = data.matter;
-					console.log(data);
-					this.loadMatterBillings();
-					this.loadMatterTasks();
-				},
-				(err) => {
-					this.router.navigateByUrl('home/matters');
-					console.log(err);
-				}
+		
+	}
+
+	public get timeEntries() {
+		if (this.details && this.details.billings) {
+			const timeEntires = this.details.billings.filter(
+				(b) => b.type != 'expense'
 			);
-		});
+			return timeEntires;
+		}
+		return [];
 	}
 
 	public get expenses() {
@@ -57,41 +54,37 @@ export class MatterDetailsPageComponent implements OnInit, OnDestroy {
 		return [];
 	}
 
-	public loadMatterTasks() {
-		this.loadingTasks = true;
-		const requests = this.tasks.map((t) =>
-			this.mattersService.getTaskById(t.task_id)
-		);
-		forkJoin(requests).subscribe(
-			(data) => {
-				this.details.tasks = data;
-				this.loadingTasks = false;
-			},
-			(err) => this.router.navigateByUrl('home/matters')
-		);
-	}
-
-	public loadMatterBillings() {
-		this.loadingBillings = true;
-		if (!this.details || !this.details.billings.length) {
-			this.loadingBillings = false;
+	ngOnInit() {
+		if (this.mattersService.currentMatter) {
+			this.details = this.mattersService.currentMatter;
+			console.log('showing', this.details)
+			this.matterId = this.details.id;
 			return;
 		}
-		const requests = this.details.billings.map((b) =>
-			this.billingService
-				.getBillingById(b.id)
-				.pipe(map((res: any) => res.billing))
-		);
 
-		forkJoin(requests).subscribe((data) => {
-			this.details.billings = data;
-			this.loadingBillings = false;
+		this.route.paramMap.subscribe((params) => {
+			if (this.details.hasOwnProperty('id')) return;
+			this.matterId = params.get('id');
+			this.mattersService.getMatterDetails(this.matterId).subscribe(
+				(data: any) => {
+					this.details = data.matter;
+					console.log(data);
+					this.mattersService.currentMatter = this.details;
+				},
+				(err) => {
+					this.router.navigateByUrl('home/matters');
+					console.log(err);
+				}
+			);
 		});
 	}
 
-	ngOnInit() {}
+	ngAfterViewInit() {}
+
+	goBack() {
+		this.router.navigateByUrl('/home/matters');
+	}
 
 	ngOnDestroy() {
-		this.mattersService.currentMatter = null;
 	}
 }

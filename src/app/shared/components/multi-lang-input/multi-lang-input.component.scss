@@ -1,0 +1,47 @@
+:host {
+	width: 100%;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: -6px;
+	padding-right: 5px;
+
+	mat-label {
+	}
+}
+//3f515b
+
+.active {
+	border-color: #3f51b5 !important;
+	border-width: 2px !important;
+}
+
+.selected {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	border-bottom: 1px solid white;
+}
+
+.lang-icon {
+	padding: 0 5px;
+}
+
+.langs {
+	display: flex;
+	width: 100%;
+	justify-content: flex-end;
+}
+
+.showOnly {
+	::ng-deep .mat-form-field-outline {
+		display: none !important;
+	}
+
+	textarea {
+		color: inherit;
+	}
+}

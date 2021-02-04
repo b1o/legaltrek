@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
+import { NgxMatDateFnsDateModule } from 'ngx-mat-datefns-date-adapter'
 
 //locale
 import { registerLocaleData } from '@angular/common';
@@ -28,6 +29,7 @@ registerLocaleData(localeBg);
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
+		NgxMatDateFnsDateModule
 	],
 	providers: [
 		BackgroundMode,

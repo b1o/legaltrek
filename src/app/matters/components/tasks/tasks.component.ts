@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
 @Component({
 	selector: 'app-tasks',
 	templateUrl: './tasks.component.html',
-	styleUrls: ['./tasks.component.scss']
+	styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent implements OnInit {
 	public TaskStatus = MatterTaskStatus;
@@ -23,11 +23,7 @@ export class TasksComponent implements OnInit {
 
 	@Input() tasks = [];
 
-	constructor(
-	
-	) {}
+	constructor() {}
 
-	ngOnInit() {
-	
-	}
+	ngOnInit() {}
 }

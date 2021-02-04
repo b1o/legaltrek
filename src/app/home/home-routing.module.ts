@@ -13,6 +13,11 @@ const routes: Routes = [
 		component: HomePage,
 		children: [
 			{
+				path: '',
+				pathMatch: 'full',
+				redirectTo: 'matters'
+			},
+			{
 				path: 'matters',
 				children: [
 					{
@@ -36,7 +41,13 @@ const routes: Routes = [
 					},
 				],
 			},
-			{ path: 'calendar', component: CalendarPageComponent },
+			{
+				path: 'calendar',
+				loadChildren: () =>
+					import('../calendar/calendar.module').then(
+						(m) => m.CalendarModule
+					),
+			},
 		],
 	},
 ];

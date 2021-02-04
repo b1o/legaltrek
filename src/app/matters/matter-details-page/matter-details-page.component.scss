@@ -1,6 +1,26 @@
 :host {
-     ion-title .toolbar-title {
-        text-overflow: inherit;
-        white-space: normal;
-     }
+	ion-title .toolbar-title {
+		text-overflow: inherit;
+		white-space: normal;
+   }
+  
+}
+
+ion-toolbar  {
+   --border-width: 0;
+}
+
+::ng-deep.mat-expansion-panel-header {
+	background: #eeeeee !important;
+
+	color: #092470;
+
+	mat-panel-title {
+		color: #092470;
+		font-weight: bold;
+	}
+}
+
+::ng-deep.mat-expansion-panel-body {
+	padding: 24px 16px !important;
 }

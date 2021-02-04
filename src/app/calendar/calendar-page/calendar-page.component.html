@@ -1,3 +1,13 @@
-<p>
-  calendar-page works!
-</p>
+<ion-header>
+	<ion-toolbar>
+		<small class="counts muted ion-margin-left" slot="start">Task 28 | Events 12</small>
+		<ion-title style="text-align: center;">
+			{{ selectedDate | date: 'dd MMMM' }}
+		</ion-title>
+    <mat-datepicker-toggle slot="end" matSuffix [for]="picker"></mat-datepicker-toggle>
+    
+    <input type="text" (dateChange)="onDateChange($event)" [matDatepicker]="picker"  style="display: none;">
+    <mat-datepicker touchUi #picker></mat-datepicker>
+	</ion-toolbar>
+</ion-header>
+<ion-content> </ion-content>

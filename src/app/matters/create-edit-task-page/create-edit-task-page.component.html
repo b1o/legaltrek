@@ -1,0 +1,84 @@
+<ion-content class="ion-padding">
+	<div [formGroup]="taskForm" class="task-form">
+		<mat-form-field>
+			<mat-label>Task name</mat-label>
+			<textarea formControlName="name" matInput></textarea>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Matter</mat-label>
+			<mat-select formControlName="matter_id">
+				<mat-option
+					[value]="matter.id"
+					*ngFor="let matter of allMatters"
+					>{{ matter.matter }}</mat-option
+				>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Client</mat-label>
+			<mat-select formControlName="client">
+				<mat-option [value]="client.id" *ngFor="let client of clients">{{
+					client.client_name
+				}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<app-multi-lang-input formControlName="description" [canEdit]="true"></app-multi-lang-input>
+
+		<mat-form-field>
+			<mat-label>Start date</mat-label>
+			<input
+				formControlName="start_date"
+				matInput
+				[matDatepicker]="startDatePicker"
+			/>
+			<mat-datepicker-toggle
+				matSuffix
+				[for]="startDatePicker"
+			></mat-datepicker-toggle>
+			<mat-datepicker touchUi #startDatePicker></mat-datepicker>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>End date</mat-label>
+			<input
+				formControlName="end_date"
+				matInput
+				[matDatepicker]="endDatePicker"
+			/>
+			<mat-datepicker-toggle
+				matSuffix
+				[for]="endDatePicker"
+			></mat-datepicker-toggle>
+			<mat-datepicker touchUi #endDatePicker></mat-datepicker>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Delivery date</mat-label>
+			<input
+				formControlName="delivery_date"
+				matInput
+				[matDatepicker]="deliveryDatePicker"
+			/>
+			<mat-datepicker-toggle
+				matSuffix
+				[for]="deliveryDatePicker"
+			></mat-datepicker-toggle>
+			<mat-datepicker touchUi #deliveryDatePicker></mat-datepicker>
+		</mat-form-field>
+	</div>
+</ion-content>
+<ion-footer class="ion-padding">
+	<div
+		style="
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		"
+	>
+		<button (click)="navController.back()" mat-stroked-button>Close</button>
+		<button (click)="save()" mat-raised-button color="accent">Save</button>
+	</div>
+</ion-footer>

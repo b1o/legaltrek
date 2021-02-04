@@ -1,0 +1,16 @@
+.task-name {
+	white-space: normal !important;
+}
+
+.task-footer { 
+    display: flex;
+    padding-top: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom:3px;
+}
+
+.mat-divider {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

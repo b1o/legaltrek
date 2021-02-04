@@ -1,14 +1,18 @@
-<mat-expansion-panel>
+<mat-expansion-panel class="mat-elevation-z0">
 	<mat-expansion-panel-header>
+		<mat-progress-bar
+			mode="indeterminate"
+			style="position: absolute; top: 0; left: 0; width: 100%"
+			*ngIf="loading"
+		></mat-progress-bar>
 		<mat-panel-title>
-			<ion-badge style="margin-right: 5px;">{{
-				timeEntries.length
-			}}</ion-badge>
+			{{timeEntries.length}}
 			Time Entries
+		
 		</mat-panel-title>
 	</mat-expansion-panel-header>
 
-	<div class="ion-margin-top" *ngFor="let entry of timeEntries">
+	<!-- <div class="ion-margin-top" *ngFor="let entry of timeEntries">
 		<ion-title class="ion-no-padding ion-no-margin">{{
 			entry.name 
 		}} | <span style="color: gray; font-size: 14px;">{{entry.type}}</span></ion-title>
@@ -38,5 +42,8 @@
 			</div>
 		</div>
 		<ion-item-divider class="ion-no-padding ion-no-margin"></ion-item-divider>
+	</div> -->
+	<div *ngFor="let timeEntry of timeEntries">
+		<app-billing [entry]="timeEntry"></app-billing>
 	</div>
 </mat-expansion-panel>

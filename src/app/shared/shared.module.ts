@@ -4,10 +4,15 @@ import { MultiLangInputComponent } from './components/multi-lang-input/multi-lan
 import { MaterialModule } from '../material/material.module';
 import { IonicModule } from '@ionic/angular';
 import { BillingComponent } from './components/billing/billing.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
 
 @NgModule({
-	declarations: [MultiLangInputComponent, BillingComponent],
-	exports: [MultiLangInputComponent, BillingComponent],
+	declarations: [
+		MultiLangInputComponent,
+		BillingComponent,
+		PageHeaderComponent,
+	],
+	exports: [MultiLangInputComponent, BillingComponent, PageHeaderComponent],
 	imports: [CommonModule, MaterialModule, IonicModule],
 })
 export class SharedModule {}

@@ -1,23 +1,38 @@
-<ion-header>
-	<ion-toolbar>
-		<ion-title collapse="condense">
-			{{ details?.name }}
+<!-- <ion-header>
+	<ion-toolbar color="primary">
+		<mat-icon
+			(click)="goBack()"
+			slot="start"
+			class="back-button ion-padding-horizontal"
+			>arrow_back_ios</mat-icon
+		>
+		<ion-title size="large">
+			<div style="white-space: normal">{{ details?.name }}</div>
 		</ion-title>
 	</ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
-	<mat-accordion>
-		<div class="ion-padding-horizontal ion-padding-top">
+<app-page-header
+	[title]="details?.name || details?.matter"
+	subTitle="Matter"
+	(back)="goBack()"
+></app-page-header>
+
+<ion-content [fullscreen]="true">
+	<mat-accordion [displayMode]="'flat'">
+		<div class="mat-elevation-z0">
 			<app-notes></app-notes>
 		</div>
-		<div class="ion-padding-horizontal ion-padding-top">
+		<div class="mat-elevation-z0">
 			<app-tasks [tasks]="tasks"></app-tasks>
 		</div>
-		<div class="ion-padding-horizontal ion-padding-top">
-			<app-time-entries></app-time-entries>
+		<div class="mat-elevation-z0">
+			<app-time-entries
+				[loading]="loadingBillings"
+				[timeEntries]="timeEntries"
+			></app-time-entries>
 		</div>
-		<div class="ion-padding-horizontal ion-padding-top">
+		<div class="mat-elevation-z0">
 			<app-expenses
 				[loading]="loadingBillings"
 				[expenses]="expenses"

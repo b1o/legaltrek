@@ -5,6 +5,7 @@ export enum MatterTaskStatus {
 }
 
 export const MatterTaskLabelMap = {
-	'Свършено': MatterTaskStatus.DONE,
-	'В процес': MatterTaskStatus.IN_PROGRESS
+	PENDING: 'PENDING',
+	IN_PROGRESS: 'IN PROGRESS',
+	DONE: 'DONE',
 }

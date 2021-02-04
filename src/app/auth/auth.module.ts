@@ -7,9 +7,12 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { IonicModule } from '@ionic/angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthGuard } from './auth.guard';
+import { SignedInGuard } from './signed-in.guard';
 
 @NgModule({
 	declarations: [LoginComponent, ResetPasswordComponent],
+	providers: [AuthGuard, SignedInGuard],
 	imports: [
 		IonicModule,
 		CommonModule,

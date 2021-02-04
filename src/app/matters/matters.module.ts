@@ -15,11 +15,16 @@ import { NotesEditModalComponent } from './components/notes-edit-modal/notes-edi
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddMatterPageComponent } from './add-matter-page/add-matter-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { CreateEditTaskPageComponent } from './create-edit-task-page/create-edit-task-page.component';
+import { TaskPageComponent } from './task-page/task-page.component';
 
 const routes: Route[] = [
 	{ path: '', component: MattersPageComponent },
 	{ path: 'add', component: AddMatterPageComponent },
 	{ path: ':id', component: MatterDetailsPageComponent },
+	{ path: ':id/task/create', component: CreateEditTaskPageComponent },
+	{ path: ':id/task/:taskId', component: TaskPageComponent },
+	{ path: ':id/task/:taskId/edit', component: CreateEditTaskPageComponent },
 ];
 
 @NgModule({
@@ -27,6 +32,7 @@ const routes: Route[] = [
 		MatterListItemComponent,
 		MattersPageComponent,
 		AddMatterPageComponent,
+		TaskPageComponent,
 		MatterDetailsPageComponent,
 		NotesComponent,
 		TimeEntriesComponent,
@@ -34,6 +40,7 @@ const routes: Route[] = [
 		MatterTaskStatusComponent,
 		ExpensesComponent,
 		NotesEditModalComponent,
+		CreateEditTaskPageComponent,
 	],
 	imports: [
 		CommonModule,
@@ -41,7 +48,7 @@ const routes: Route[] = [
 		ReactiveFormsModule,
 		RouterModule.forChild(routes),
 		MaterialModule,
-		SharedModule
+		SharedModule,
 	],
 })
 export class MattersModule {}

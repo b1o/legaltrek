@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { NetworkService } from '../services/network.service';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { TaskDTO } from './models/taskDto';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class MattersService {
 	public currentMatter = null;
+	public currentTask = null;
+	public matters = [];
 
 	constructor(private network: NetworkService) {}
 
@@ -15,9 +18,21 @@ export class MattersService {
 		return this.network.get('/api/get/matters');
 	}
 
+	createTask(data: TaskDTO) {
+		return this.network.post('/api/tasks/save', data);
+	}
+
+	editTask(data: TaskDTO) {
+		return this.network.post('/api/tasks/save/' + data.id, data);
+	}
+
 	getTaskById(id) {
 		const url = `/api/tasks/${id}`;
 		return this.network.get(url);
+	}
+
+	getClients() {
+		return this.network.get('/api/get/clients');
 	}
 
 	public getMatterDetails(matterId) {

@@ -3,8 +3,8 @@
 </ion-header>
 
 <ion-content>
-	<ion-grid style="padding: 5% 15%;" [formGroup]="loginForm">
-		<ion-row style="margin-top: 10%;">
+	<ion-grid style="padding: 5% 15%" [formGroup]="loginForm">
+		<ion-row style="margin-top: 10%">
 			<ion-col>
 				<h2>Login</h2>
 			</ion-col>
@@ -27,23 +27,24 @@
 			</ion-col>
 		</ion-row>
 		<ion-row
-			style="margin-top: 10px; margin-bottom: 50px;"
+			style="margin-top: 10px; margin-bottom: 50px"
 			class="ion-justify-content-center"
 		>
 			<a routerLink="/auth/reset-password">Forgot password?</a>
 		</ion-row>
-		<ion-row class="ion-justify-content-center ion-margin">
-			<ion-spinner color="primary" *ngIf="loading"></ion-spinner>
-		</ion-row>
 		<ion-row class="ion-justify-content-center">
-			<button
+			<ion-button
 				(click)="login()"
 				[disabled]="loginForm.invalid || loading"
-				mat-raised-button
 				color="primary"
 			>
+				<ion-spinner
+					*ngIf="loading"
+					style="width: 16px; height: 16px; margin-right: 3px"
+					class="spinner"
+				></ion-spinner>
 				Login
-			</button>
+			</ion-button>
 		</ion-row>
 	</ion-grid>
 </ion-content>

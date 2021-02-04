@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
 			.login(this.loginForm.value as LoginDto)
 			.subscribe((response) => {
 				this.loading = false;
+				console.log(response)
 				this.router.navigateByUrl('/home/matters');
 			});
 	}

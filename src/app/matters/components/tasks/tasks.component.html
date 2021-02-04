@@ -1,4 +1,4 @@
-<mat-expansion-panel style="position: relative">
+<mat-expansion-panel class="mat-elevation-z0" style="position: relative">
 	<mat-expansion-panel-header>
 		<mat-progress-bar
 			mode="indeterminate"
@@ -6,31 +6,29 @@
 			*ngIf="loading"
 		></mat-progress-bar>
 		<mat-panel-title>
-			<ion-badge style="margin-right: 5px">{{ tasks?.length }}</ion-badge>
+			{{ tasks?.length }}
 			Tasks
 		</mat-panel-title>
 	</mat-expansion-panel-header>
-
-	<ion-list *ngIf="!loading">
-		<ion-item-group *ngFor="let task of tasks">
-			<ion-item
-				style="width: 100%"
-				class="item-text-wrap ion-no-padding ion-no-margin"
-				[lines]="'none'"
-			>
-				<div>
-					{{ task.priority }}.
+	<mat-list>
+		<ng-container *ngFor="let task of tasks ">
+			<mat-list-item   style="height: auto;"  routerLink="./task/{{task.id}}">
+				<p class="task-name" mat-line>
 					{{ task.created | date: 'dd.M.yyyy':'undefined':'bg_BG' }}
 					{{ task.name }}
+				</p>
+				<div mat-line>
+					<div class="task-footer">
+						<div class="names">
+							<span *ngFor="let person  of  task.assigned_to">{{person.name}}</span>
+						</div>
+						<app-matter-task-status
+							[status]="task.status"
+						></app-matter-task-status>
+					</div>
 				</div>
-			</ion-item>
-			<ion-item class="item-text-wrap ion-no-padding ion-no-margin">
-				<strong>{{ task.assigned_to_names }}</strong>
-				<app-matter-task-status
-					slot="end"
-					[status]="task.status"
-				></app-matter-task-status>
-			</ion-item>
-		</ion-item-group>
-	</ion-list>
+			</mat-list-item>
+			<mat-divider></mat-divider>
+		</ng-container>
+	</mat-list>
 </mat-expansion-panel>

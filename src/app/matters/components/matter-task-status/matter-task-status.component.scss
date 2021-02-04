@@ -2,3 +2,31 @@
 	width: 12px !important;
 	height: 12px !important;
 }
+
+button {
+	color: white;
+	animation-name: test;
+	animation-duration: 1s;
+	animation-direction: forwards;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.success {
+	background-color: var(--ion-color-success);
+}
+.warning {
+	background-color: var(--ion-color-warning);
+}
+.secondary {
+	background-color: var(--ion-color-secondary);
+}
+
+@keyframes test {
+	0% {
+		max-width: 0;
+	}
+	100% {
+		max-width: 200px;
+	}
+}

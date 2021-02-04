@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MatterTaskLabelMap, MatterTaskStatus } from '../../models/matter-task-status';
 import { MapType } from '@angular/compiler';
 import { ActionSheetController } from '@ionic/angular';
@@ -8,6 +8,7 @@ import { MattersService } from '../../matters.service';
 	selector: 'app-matter-task-status',
 	templateUrl: './matter-task-status.component.html',
 	styleUrls: ['./matter-task-status.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatterTaskStatusComponent implements OnInit {
 	TaskStatus = MatterTaskStatus;
@@ -21,13 +22,15 @@ export class MatterTaskStatusComponent implements OnInit {
 
 	constructor(
 		private actionSheetController: ActionSheetController,
+		private cd: ChangeDetectorRef,
 		private mattersService: MattersService
 	) {}
 
 	ngOnInit() {}
 
 	get buttonColor() {
-		switch (this.LabelMap[this.status]) {
+		console.log(this.status)
+		switch (+this.status) {
 			case MatterTaskStatus.DONE:
 				return 'success';
 
@@ -39,7 +42,8 @@ export class MatterTaskStatusComponent implements OnInit {
 		}
 	}
 
-	async openSheet() {
+	async openSheet(event: MouseEvent) {
+		event.stopPropagation()
 		const actionSheet = await this.actionSheetController.create({
 			header: 'Status',
 			cssClass: 'my-custom-class',
@@ -48,18 +52,21 @@ export class MatterTaskStatusComponent implements OnInit {
 					text: 'Pending',
 					handler: () => {
 						this.onStatusChange(MatterTaskStatus.PENDING);
+						this.cd.markForCheck()
 					},
 				},
 				{
 					text: 'In Progress',
 					handler: () => {
 						this.onStatusChange(MatterTaskStatus.IN_PROGRESS);
+						this.cd.markForCheck()
 					},
 				},
 				{
 					text: 'Done',
 					handler: () => {
 						this.onStatusChange(MatterTaskStatus.DONE);
+						this.cd.markForCheck()
 					},
 				},
 			],
@@ -74,6 +81,8 @@ export class MatterTaskStatusComponent implements OnInit {
 			this.loading = false;
 			this.status = newStatus;
 			this.statusChange.emit(newStatus);
+			this.cd.markForCheck()
+
 		});
 	}
 }

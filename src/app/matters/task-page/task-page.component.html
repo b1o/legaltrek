@@ -1,0 +1,58 @@
+<app-page-header
+	[title]="taskData?.name"
+	subTitle="Task"
+	(back)="goBack()"
+></app-page-header>
+
+<ion-content class="ion-padding">
+	<div *ngIf="taskData; else loading">
+		<div class="task-item assigned-to">
+			<ion-label class="muted" slot="start">Assigned to:</ion-label>
+			<span slot="end">{{ taskData.attendees_names }}</span>
+		</div>
+
+		<div class="task-item task-description">
+			<app-multi-lang-input
+				[input]="taskData.description"
+			></app-multi-lang-input>
+		</div>
+
+		<div class="task-item task-dates">
+			<ion-label slot="start" class="muted">start/end date</ion-label>
+			<span slot="end"
+				>{{ taskData.start_date }} / {{ taskData.end_date }}</span
+			>
+		</div>
+
+		<div class="task-item task-delivery">
+			<ion-label slot="start" class="muted">delivery date</ion-label>
+			<span slot="end">{{ taskData.delivery }}</span>
+		</div>
+	</div>
+
+	<div class="task-item documents">
+		<ion-label class="muted">attached documents</ion-label>
+		<div class="file-input">
+			<input style="display: none" type="file" #fInput />
+			<button mat-icon-button (click)="fInput.click()">
+				<mat-icon color="primary">add_circle_outline</mat-icon>
+			</button>
+		</div>
+	</div>
+
+	<div class="task-item reminders">
+		<ion-label class="muted">reminders</ion-label>
+	</div>
+</ion-content>
+
+<ion-footer class="ion-padding">
+	<button [disabled]="!taskData" routerLink="./edit" mat-stroked-button>
+		Edit
+	</button>
+</ion-footer>
+
+<ng-template #loading>
+	<div style="display: flex; justify-content: center; align-items: center">
+		<ion-spinner></ion-spinner>
+	</div>
+</ng-template>

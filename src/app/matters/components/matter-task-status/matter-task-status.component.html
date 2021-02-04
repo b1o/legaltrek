@@ -1,8 +1,10 @@
-<ion-button (click)="openSheet()" [color]="buttonColor">
-	<ion-spinner
-		*ngIf="loading"
-		style="width: 16px; height: 16px; margin-right: 3px;"
-		class="spinner"
-	></ion-spinner>
-	<ion-label> {{ status }}</ion-label>
-</ion-button>
+<button mat-raised-button class="{{ buttonColor }}" (click)="openSheet($event)">
+	<div style="display: flex; align-items: center">
+		<mat-spinner
+			*ngIf="loading"
+			style="width: 16px; height: 16px; margin-right: 3px"
+			class="spinner"
+		></mat-spinner>
+		{{ LabelMap[TaskStatus[status]] }}
+	</div>
+</button>

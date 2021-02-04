@@ -1,4 +1,4 @@
-<mat-expansion-panel style="position: relative">
+<mat-expansion-panel class="mat-elevation-z0" style="position: relative">
 	<mat-expansion-panel-header>
 		<mat-progress-bar
 			mode="indeterminate"
@@ -6,9 +6,7 @@
 			*ngIf="loading"
 		></mat-progress-bar>
 		<mat-panel-title>
-			<ion-badge style="margin-right: 5px">{{
-				expenses?.length
-			}}</ion-badge>
+			{{ expenses.length }}
 			Expenses
 		</mat-panel-title>
 	</mat-expansion-panel-header>

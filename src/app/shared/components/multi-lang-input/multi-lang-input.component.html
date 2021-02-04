@@ -1,8 +1,40 @@
 <div>
-  <div class="header">
-    <mat-label>{{label}}</mat-label>
-    <div class="langs">
-      
-    </div>
-  </div>
+	<div class="content">
+		<!-- <strong>
+			{{ languages.length ? input[currentLanguage] : input }}</strong
+		> -->
+		<div class="header">
+			<mat-label class="muted">{{ label }} </mat-label>
+
+			<div class="langs">
+				<ion-icon
+					[ngClass]="{
+						selected: lang.key == currentLanguage,
+						active: focused
+					}"
+					*ngFor="let lang of parsedInput | keyvalue"
+					(click)="selectLanguage(lang.key); textInput?.focus()"
+					class="lang-icon"
+					size="large"
+					src="/assets/icon/flag/{{ lang.key }}.svg"
+				></ion-icon>
+			</div>
+		</div>
+		<mat-form-field
+			[appearance]="'outline'"
+			style="width: 100%"
+			[ngClass]="{ showOnly: !canEdit }"
+		>
+			<textarea
+				[disabled]="!canEdit"
+				(focus)="focused = true"
+				(blur)="focused = false"
+				(change)="onTextChange($event)"
+				#textInput
+				type="text"
+				matInput
+				[value]="parsedInput ? parsedInput[currentLanguage] : input"
+			></textarea>
+		</mat-form-field>
+	</div>
 </div>

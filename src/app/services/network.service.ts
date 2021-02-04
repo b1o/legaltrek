@@ -5,18 +5,21 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
 import { empty, from, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class NetworkService {
 	// private baseUrl = 'https://bg.app.legaltrek.com';
-	private baseUrl = '/backend';
+	private baseUrl = environment.backend;
 
 	constructor(
 		private http: HttpClient,
 		private toastController: ToastController
-	) {}
+	) {
+		console.log(`sending requests to: ${this.baseUrl}`)
+	}
 
 	public get(path, params?: { [key: string]: any }) {
 		const request = this.http.get(this.makeUrl(path));
@@ -49,6 +52,7 @@ export class NetworkService {
 	}
 
 	private async onError(err) {
+		console.error(err)
 		const toast = await this.toastController.create({
 			message: err.message,
 			buttons: ['OK'],

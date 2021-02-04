@@ -30,6 +30,19 @@
 	background-image: none;
 }
 
+.tab-selected {
+	color: var(--ion-color-secondary)
+}
+
+ion-title.title-large {
+	word-wrap: normal !important;
+	white-space: normal;
+}
+
+.muted {
+	color: #979797  !important;
+}
+
 .spinner svg {
 	width: 12px !important;
 	height: 12px !important;
