@@ -23,6 +23,7 @@ export class MattersService {
 	}
 
 	editTask(data: TaskDTO) {
+		console.log(data)
 		return this.network.post('/api/tasks/save/' + data.id, data);
 	}
 

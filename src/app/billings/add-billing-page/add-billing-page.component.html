@@ -1,3 +1,80 @@
-<p>
-  add-billing-page works!
-</p>
+<app-page-header [title]="'Billing'" [subTitle]="'edit'"></app-page-header>
+
+<ion-content class="ion-padding">
+	<div [formGroup]="billingForm">
+		<mat-form-field>
+			<mat-label>Matter</mat-label>
+			<mat-select formControlName="matter">
+				<mat-option
+					[value]="matter"
+					*ngFor="let matter of allMatters"
+					>{{ matter.matter }}</mat-option
+				>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Client</mat-label>
+			<mat-select formControlName="client">
+				<mat-option
+					[value]="client.id"
+					*ngFor="let client of allClients"
+					>{{ client.client_name }}</mat-option
+				>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Task</mat-label>
+			<mat-select formControlName="task">
+				<mat-option [value]="task.id" *ngFor="let task of tasks">{{
+					task.name
+				}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<app-multi-lang-input [canEdit]="true"></app-multi-lang-input>
+
+		<mat-form-field>
+			<mat-label>Worked on</mat-label>
+			<input
+				formControlName="worked_on"
+				matInput
+				[matDatepicker]="workedOnDatePicked"
+			/>
+			<mat-datepicker-toggle
+				matSuffix
+				[for]="workedOnDatePicked"
+			></mat-datepicker-toggle>
+			<mat-datepicker touchUi #workedOnDatePicked></mat-datepicker>
+		</mat-form-field>
+
+		<ion-item>
+			<ion-label>Worked Time</ion-label>
+			<ion-datetime displayFormat="HH:mm"></ion-datetime>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Billable Time</ion-label>
+			<ion-datetime displayFormat="HH:mm"></ion-datetime>
+		</ion-item>
+
+		<mat-form-field style="margin-top: 32px">
+			<mat-label>Rate</mat-label>
+			<input matInput type="number" />
+			<span matSuffix>$</span>
+		</mat-form-field>
+
+		<mat-form-field style="margin-top: 32px">
+			<mat-label>Total</mat-label>
+			<input matInput type="number" />
+			<span matSuffix>$</span>
+		</mat-form-field>
+	</div>
+</ion-content>
+<ion-footer class="ion-padding">
+	<div class="footer-actions">
+		<button mat-stroked-button>Cancel</button>
+		<button mat-flat-button color="primary">save</button>
+	</div>
+</ion-footer>

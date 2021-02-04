@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { parse } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { AuthService } from 'src/app/auth/auth.service';
 import { LayoutService } from 'src/app/home/layout.service';
 import { MattersService } from '../matters.service';
@@ -30,7 +30,7 @@ export class CreateEditTaskPageComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private layoutService: LayoutService,
 		private router: Router,
-		public navController:  NavController,
+		public navController: NavController,
 		private auth: AuthService
 	) {
 		console.log('edit   task');
@@ -113,13 +113,13 @@ export class CreateEditTaskPageComponent implements OnInit, OnDestroy {
 	}
 
 	private parseDates(data) {
-		data.end_date = parse(data.end_date, 'dd.mm.yyyy', new Date());
+		data.end_date = parse(data.end_date, 'dd.MM.yyyy', new Date());
 		data.delivery_date = parse(
 			data.delivery_date,
-			'dd.mm.yyyy',
+			'dd.MM.yyyy',
 			new Date()
 		);
-		data.start_date = parse(data.start_date, 'dd.mm.yyyy', new Date());
+		data.start_date = parse(data.start_date, 'dd.MM.yyyy', new Date());
 	}
 
 	public get task() {
@@ -130,10 +130,17 @@ export class CreateEditTaskPageComponent implements OnInit, OnDestroy {
 		this.mattersService.currentTask = value;
 	}
 
+	private formatDates(data) {
+		data.end_date = format(new Date(data.end_date), 'dd.MM.yyyy');
+		data.start_date = format(new Date(data.start_date), 'dd.MM.yyyy');
+		data.delivery_date = format(new Date(data.delivery_date), 'dd.MM.yyyy');
+	}
+
 	public save() {
-		console.log(this.taskForm.value);
+		const data = { ...this.taskForm.value };
+		this.formatDates(data);
 		this.mattersService
-			.editTask(this.taskForm.value)
+			.editTask(data)
 			.subscribe((data) => console.log(data));
 	}
 

@@ -27,7 +27,7 @@ export class NetworkService {
 		return request.pipe(
 			catchError((err) => this.onError(err)),
 			switchMap((res) => this.parseResponse(res))
-		);
+	);
 	}
 
 	public post(path, body) {
