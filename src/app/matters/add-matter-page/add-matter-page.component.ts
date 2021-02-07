@@ -11,6 +11,7 @@ import { MattersService } from '../matters.service';
 })
 export class AddMatterPageComponent implements OnInit {
 	public form: FormGroup;
+	public clients = [];
 
 	constructor(
 		private navController: NavController,
@@ -23,7 +24,14 @@ export class AddMatterPageComponent implements OnInit {
 		});
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.matterService.getClients().subscribe((data) => {
+			this.clients = Object.keys(data.clients).map(
+				(id) => data.clients[id]
+			);
+			console.log(this.clients);
+		});
+	}
 
 	cancel() {
 		this.navController.back();

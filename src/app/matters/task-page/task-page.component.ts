@@ -19,12 +19,17 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 	) {
 		this.route.paramMap.subscribe((params) => {
 			this.taskId = +params.get('taskId');
+
 			this.mattersService.getTaskById(this.taskId).subscribe((task) => {
 				console.log(task);
 				this.taskData = { ...task, id: this.taskId };
 				this.mattersService.currentTask = task;
 			});
 		});
+	}
+
+	ionViewDidEnter() {
+	
 	}
 
 	goBack() {
@@ -40,6 +45,5 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {}
 
-	ngOnDestroy() {
-	}
+	ngOnDestroy() {}
 }

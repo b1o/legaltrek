@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { PickerController } from '@ionic/angular';
+import { format, parse } from 'date-fns';
 import { LayoutService } from 'src/app/home/layout.service';
 import { MattersService } from 'src/app/matters/matters.service';
 import { BillingsService } from '../billings.service';
@@ -24,17 +26,37 @@ export class AddBillingPageComponent implements OnInit, OnDestroy {
 
 	public billingForm: FormGroup;
 
+	public customPickerOptions = {
+		columns: [
+			{
+				name: 'hours',
+				prefix: 'Hours',
+				options: this.getNumber(24),
+			},
+			{
+				name: 'minutes',
+				suffix: 'Minutes',
+				options: this.getNumber(59),
+			},
+		],
+		buttons: [{ text: 'Cancel', role: 'cancel' }, { text: 'Ok' }],
+	};
+
 	constructor(
 		private matterService: MattersService,
 		private billings: BillingsService,
 		private fb: FormBuilder,
-		private layoutService: LayoutService
+		private layoutService: LayoutService,
+		private pickerController: PickerController
 	) {
+		console.log(this.customPickerOptions);
 		this.billingForm = this.fb.group({
 			matter: '',
 			client: '',
 			task: [{ value: '', disabled: true }],
 			worked_on: '',
+			worked_time: '',
+			billable_time: '',
 		});
 
 		this.getMatters();
@@ -52,6 +74,35 @@ export class AddBillingPageComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {}
+
+	public async openDatePicker(control) {
+		const picker = await this.pickerController.create(
+			this.customPickerOptions
+		);
+
+		await picker.present();
+		const { data, role } = await picker.onDidDismiss();
+		console.log(data, role);
+		if (role) {
+			return;
+		}
+		const { hours, minutes } = data;
+		this.billingForm
+			.get(control)
+			.patchValue(`${hours.value} hrs ${minutes.value} mins`);
+	}
+
+	private getNumber(amount) {
+		const mins = [];
+		for (let i = 0; i <= amount; i++) {
+			if (i <= 9) {
+				mins.push({ text: `0${i}`, value: i });
+			} else {
+				mins.push({ text: i, value: i });
+			}
+		}
+		return mins;
+	}
 
 	public get taskControl() {
 		return this.billingForm.get('task');
@@ -84,6 +135,11 @@ export class AddBillingPageComponent implements OnInit, OnDestroy {
 				...response.matters[matterId],
 			}));
 		});
+	}
+
+	public save() {
+		this.billings.createBilling(this.billingForm.value)
+			.subscribe(data  => console.log(data))
 	}
 
 	ionViewDidEnter() {

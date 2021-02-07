@@ -15,7 +15,9 @@ export class MattersPageComponent implements OnInit {
 		private router: Router
 	) {}
 
-	ngOnInit() {
+	ngOnInit() {}
+
+	ionViewDidEnter() {
 		this.mattersService.getMatters().subscribe((data: any) => {
 			this.matters = Object.keys(data.matters).map((key) => ({
 				id: key,

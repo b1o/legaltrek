@@ -40,27 +40,28 @@ export class CreateEditTaskPageComponent implements OnInit, OnDestroy {
 			name: '',
 			id: '',
 			description: '',
-			level: '',
-			priority: '',
+			level: '1',
+			priority: 'low',
 			start_date: '',
 			end_date: '',
 			delivery_date: '',
 			client_type: '',
 			client: '',
-			color: '',
+			color: 'red',
 			assigned_to: '',
 		});
 		if (!this.mattersService.currentMatter) {
 			this.router.navigateByUrl('/home/matters');
 			return;
 		}
-		this.taskForm.patchValue({ assigned_to: this.auth.user.user_id });
+		this.taskForm.patchValue({ assigned_to: +this.auth.user.user_id });
 
 		this.setMatter();
 		this.setClient();
 
 		if (this.task) {
 			console.log('task', this.task);
+			this.taskForm.patchValue({client_type: this.task.client_type})
 			this.parseDates(this.task);
 			this.taskForm.patchValue(this.task);
 		} else {
@@ -84,6 +85,8 @@ export class CreateEditTaskPageComponent implements OnInit, OnDestroy {
 				id,
 				...data.clients[id],
 			}));
+
+			
 			const currentClient = this.clients.find(
 				(c) => c.client_name == this.mattersService.currentMatter.client
 			);
@@ -141,7 +144,10 @@ export class CreateEditTaskPageComponent implements OnInit, OnDestroy {
 		this.formatDates(data);
 		this.mattersService
 			.editTask(data)
-			.subscribe((data) => console.log(data));
+			.subscribe((data) => {
+				console.log(data);
+				this.navController.back()
+			});
 	}
 
 	ngOnInit() {}

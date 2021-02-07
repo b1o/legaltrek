@@ -11,6 +11,10 @@ export class BillingsService {
 		return this.network.get('/api/get/billings');
 	}
 
+	public createBilling(data) {
+		return this.network.post('/api/billings/save', data);
+	}
+
 	public getBillingById(id) {
 		return this.network.get(`/api/get/billing/${id}`);
 	}
