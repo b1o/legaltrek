@@ -1,4 +1,7 @@
-<app-page-header [title]="'Billing'" [subTitle]="'Create'"></app-page-header>
+<app-page-header
+	[title]="'Billing'"
+	[subTitle]="isEditing ? 'Edit' : 'Create'"
+></app-page-header>
 
 <ion-content class="ion-padding">
 	<div [formGroup]="billingForm">
@@ -17,7 +20,7 @@
 			<mat-label>Client</mat-label>
 			<mat-select formControlName="client">
 				<mat-option
-					[value]="client.id"
+					[value]="client"
 					*ngFor="let client of allClients"
 					>{{ client.client_name }}</mat-option
 				>

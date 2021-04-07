@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { ActivatedRoute } from '@angular/router';
 import { PickerController } from '@ionic/angular';
 import { format, parse } from 'date-fns';
 import { LayoutService } from 'src/app/home/layout.service';
@@ -25,6 +26,10 @@ export class AddBillingPageComponent implements OnInit, OnDestroy {
 	public tasks = [];
 
 	public billingForm: FormGroup;
+	public billingId: number;
+	public billingData = null;
+
+	public isEditing = false;
 
 	public customPickerOptions = {
 		columns: [
@@ -57,6 +62,17 @@ export class AddBillingPageComponent implements OnInit, OnDestroy {
 			worked_on: '',
 			worked_time: '',
 			billable_time: '',
+		});
+
+		this.billings.currentBilling$.subscribe((billing) => {
+			console.log('current billing', billing);
+			if (billing) {
+				console.log(billing);
+				this.billingId = billing.id;
+				this.isEditing = true;
+				this.billingData = billing;
+				this.billingForm.patchValue(billing);
+			}
 		});
 
 		this.getMatters();
@@ -124,7 +140,13 @@ export class AddBillingPageComponent implements OnInit, OnDestroy {
 				...response.clients[clientId],
 			}));
 
-			console.log(this.allClients);
+			if (this.billingData) {
+				const currentClient = this.allClients.find(
+					(c) => c.client_name == this.billingData.client_name
+				);
+				this.billingForm.patchValue({ client: currentClient });
+				console.log(currentClient);
+			}
 		});
 	}
 
@@ -134,20 +156,32 @@ export class AddBillingPageComponent implements OnInit, OnDestroy {
 				id: matterId,
 				...response.matters[matterId],
 			}));
+
+			if (this.billingData) {
+				const currentMatter = this.allMatters.find(
+					(m) => m.matter == this.billingData.matter_name
+				);
+				this.billingForm.patchValue({ matter: currentMatter });
+				console.log(this.allMatters);
+			}
 		});
 	}
 
 	public save() {
-		this.billings.createBilling(this.billingForm.value)
-			.subscribe(data  => console.log(data))
+		this.billings
+			.createBilling(this.billingForm.value)
+			.subscribe((data) => console.log(data));
 	}
 
 	ionViewDidEnter() {
 		this.layoutService.hideFabButton();
+		this.getMatters();
+		this.getClients();
 	}
 
 	ionViewDidLeave() {
 		this.layoutService.showFabButton();
+		this.billings.currentBilling$.next(null);
 	}
 	ngOnDestroy() {}
 }

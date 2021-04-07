@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 const routes: Route[] = [
 	{ path: '', component: BillingsPageComponent },
 	{ path: 'add', component: AddBillingPageComponent },
+	{ path: ':id', component: AddBillingPageComponent },
 ];
 
 @NgModule({

@@ -5,7 +5,7 @@
 <ion-content>
 	<ion-grid style="padding: 5% 15%" [formGroup]="loginForm">
 		<ion-row style="margin-top: 10%">
-			<ion-col>
+			<ion-col  class="ion-justify-content-center" style="display: flex;">
 				<h2>Login</h2>
 			</ion-col>
 		</ion-row>
@@ -18,20 +18,20 @@
 			</ion-col>
 		</ion-row>
 
-		<ion-row class="ion-align-items-center">
+		<!-- <ion-row class="ion-align-items-center">
 			<ion-col>
 				<mat-form-field [appearance]="'outline'">
 					<mat-label>Password</mat-label>
 					<input type="password" matInput formControlName="pass" />
 				</mat-form-field>
 			</ion-col>
-		</ion-row>
-		<ion-row
+		</ion-row> -->
+		<!-- <ion-row
 			style="margin-top: 10px; margin-bottom: 50px"
 			class="ion-justify-content-center"
 		>
 			<a routerLink="/auth/reset-password">Forgot password?</a>
-		</ion-row>
+		</ion-row> -->
 		<ion-row class="ion-justify-content-center">
 			<ion-button
 				(click)="login()"

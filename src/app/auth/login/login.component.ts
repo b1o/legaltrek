@@ -28,12 +28,17 @@ export class LoginComponent implements OnInit {
 
 	login() {
 		this.loading = true;
-		this.auth
-			.login(this.loginForm.value as LoginDto)
-			.subscribe((response) => {
+		// this.auth
+		// 	.login(this.loginForm.value as LoginDto)
+		// 	.subscribe((response) => {
+		// 		this.loading = false;
+		// 		console.log(response)
+		// 		this.router.navigateByUrl('/home/matters');
+		// 	});
+		this.auth.checkEmail(this.loginForm.get('email').value)
+			.subscribe(response => {
+				console.log(response);
 				this.loading = false;
-				console.log(response)
-				this.router.navigateByUrl('/home/matters');
-			});
+			})
 	}
 }

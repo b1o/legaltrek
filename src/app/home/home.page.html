@@ -5,17 +5,17 @@
 <ion-content>
 	<ion-tabs #tabs>
 		<ion-tab-bar slot="top">
-			<ion-tab-button tab="matters">
+			<ion-tab-button (click)="openTab($event)" tab="matters">
 				<ion-icon name="bookmark"></ion-icon>
 				<ion-label>Matters</ion-label>
 			</ion-tab-button>
 
-			<ion-tab-button  tab="billings">
+			<ion-tab-button (click)="openTab($event)" tab="billings">
 				<ion-icon name="logo-usd"></ion-icon>
 				<ion-label>Billings</ion-label>
 			</ion-tab-button>
 
-			<ion-tab-button  tab="calendar">
+			<ion-tab-button (click)="openTab($event)" tab="calendar">
 				<ion-icon name="calendar"></ion-icon>
 				<ion-label>Calendar</ion-label>
 			</ion-tab-button>
