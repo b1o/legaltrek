@@ -4,9 +4,5 @@
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
-  "plugins": {},
-  "server": {
-    "url": "http://192.168.1.150:8100",
-    "cleartext": true
-  }
+  "plugins": {}
 }

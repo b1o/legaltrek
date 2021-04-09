@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { NetworkService } from "../services/network.service";
 import { LoginDto } from "./models/loginDto";
 import { Router } from "@angular/router";
-import { tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 
 import { Plugins } from "@capacitor/core";
 import { HttpClient } from "@angular/common/http";
@@ -33,8 +33,14 @@ export class AuthService {
   public checkEmail(email: string) {
     return this.http.post(
       "http://shinbanatabazazalogin.legaltrek.com/api/relocate",
-      { email }
-    );
+      { email },
+    ).pipe(
+      map(
+        (res: any) => {
+          this.network.baseUrl = `https://${res.result.location}`
+        }
+      )
+    )
   }
 
   public login(loginDto: LoginDto) {

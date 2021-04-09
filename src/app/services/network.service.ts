@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class NetworkService {
 	// private baseUrl = 'https://bg.app.legaltrek.com';
-	private baseUrl = environment.backend;
+	public baseUrl = environment.backend;
 
 	constructor(
 		private http: HttpClient,
