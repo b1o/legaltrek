@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { NetworkService } from "../services/network.service";
 import { LoginDto } from "./models/loginDto";
 import { Router } from "@angular/router";
-import { map, tap } from "rxjs/operators";
+import { filter, map, tap } from "rxjs/operators";
 
 import { Plugins } from "@capacitor/core";
 import { HttpClient } from "@angular/common/http";
@@ -30,22 +30,30 @@ export class AuthService {
     });
   }
 
+  public twoFactorAuth(code) {
+    return this.network.post("/api/auth/try_code", {
+      code,
+    });
+  }
+
   public checkEmail(email: string) {
-    return this.http.post(
-      "http://shinbanatabazazalogin.legaltrek.com/api/relocate",
-      { email },
-    ).pipe(
-      map(
-        (res: any) => {
-          this.network.baseUrl = `https://${res.result.location}`
-        }
-      )
-    )
+    return this.http
+      .post("http://shinbanatabazazalogin.legaltrek.com/api/relocate", {
+        email,
+      })
+      .pipe(
+        map((res: any) => {
+          this.network.baseUrl = `https://${res.result.location}`;
+          console.log('setting location to', this.network.baseUrl)
+          Storage.set({ key: "location", value: this.network.baseUrl });
+        })
+      );
   }
 
   public login(loginDto: LoginDto) {
     return this.network.post("/api/login", loginDto).pipe(
       tap((data) => {
+        if(data.url == 'try_code') return;
         this.user = data;
         this.languages = Object.keys(this.user.languages);
         Storage.set({ key: "user", value: JSON.stringify(data) });

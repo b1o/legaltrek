@@ -6,6 +6,9 @@ import { HTTP, HTTPResponse } from '@ionic-native/http/ngx';
 import { empty, from, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
+
 
 @Injectable({
 	providedIn: 'root',
@@ -19,10 +22,13 @@ export class NetworkService {
 		private toastController: ToastController
 	) {
 		console.log(`sending requests to: ${this.baseUrl}`)
+		Storage.get({key: 'location'}).then(
+			val => this.baseUrl = val.value
+		)
 	}
 
 	public get(path, params?: { [key: string]: any }) {
-		const request = this.http.get(this.makeUrl(path));
+		const request = this.http.get(this.makeUrl(path), {withCredentials:true});
 
 		return request.pipe(
 			catchError((err) => this.onError(err)),
@@ -31,7 +37,7 @@ export class NetworkService {
 	}
 
 	public post(path, body) {
-		const request = this.http.post(this.makeUrl(path), body, {});
+		const request = this.http.post(this.makeUrl(path), body, {withCredentials: true});
 
 		return request.pipe(
 			catchError((err) => this.onError(err)),
@@ -40,11 +46,11 @@ export class NetworkService {
 	}
 
 	private parseResponse(response) {
-		if (!response.success) {
+		if (!response.success && !response.url) {
 			this.presentToast(`Server error: ${response.result.message}`);
 			return throwError(response.result);
 		}
-		return of(response.result);
+		return of(response.result || response);
 	}
 
 	private makeUrl(path) {
@@ -58,6 +64,7 @@ export class NetworkService {
 			buttons: ['OK'],
 		});
 		toast.present();
+		return of(err);
 	}
 
 	private async presentToast(message) {

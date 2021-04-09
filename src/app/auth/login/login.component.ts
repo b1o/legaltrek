@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../auth.service";
 import { LoginDto } from "../models/loginDto";
 import { Router } from "@angular/router";
+import { Plugins } from "@capacitor/core";
 
 @Component({
   selector: "app-login",
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public loading = false;
   public showPassword = false;
+  public twoFactor = false;
 
   constructor(
     private fb: FormBuilder,
@@ -22,6 +24,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ["danail.stoqnov@gmail.com ", [Validators.required]],
       pass: ["reset$0", Validators.required],
+      twoFactor: "",
     });
   }
 
@@ -30,23 +33,41 @@ export class LoginComponent implements OnInit {
   login() {
     this.loading = true;
 
-    if (this.showPassword) {
+    if (this.twoFactor) {
       this.auth
-        .login(this.loginForm.value as LoginDto)
-        .subscribe((response) => {
+        .twoFactorAuth(this.loginForm.get("twoFactor").value)
+        .subscribe((res) => {
+          console.log(res);
           this.loading = false;
-          console.log(response);
-          // this.router.navigateByUrl("/home/matters");
+          if (res) {
+            this.router.navigateByUrl("/home/matters");
+          }
         });
+      return;
     }
 
-    this.auth
-      .checkEmail(this.loginForm.get("email").value)
-      .subscribe((response) => {
-        console.log(response);
-        this.loading = false;
-        this.showPassword = true;
-        this.loginForm.get("email").disable();
-      });
+    if (this.showPassword) {
+      this.auth
+        .login(this.loginForm.getRawValue() as LoginDto)
+        .subscribe((response: any) => {
+          this.loading = false;
+          console.log(response);
+          if (response.url == "try_code") {
+            this.twoFactor = true;
+            this.loginForm.get("pass").disable();
+          } else {
+            this.router.navigateByUrl("/home/matters");
+          }
+        });
+    } else {
+      this.auth
+        .checkEmail(this.loginForm.get("email").value)
+        .subscribe((response) => {
+          console.log(response);
+          this.loading = false;
+          this.showPassword = true;
+          this.loginForm.get("email").disable();
+        });
+    }
   }
 }

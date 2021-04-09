@@ -26,6 +26,15 @@
 				</mat-form-field>
 			</ion-col>
 		</ion-row>
+
+		<ion-row class="ion-align-items-center" *ngIf="twoFactor">
+			<ion-col>
+				<mat-form-field [appearance]="'outline'">
+					<mat-label>Confirm your Google 2 Step Verification!</mat-label>
+					<input type="text" matInput formControlName="twoFactor" />
+				</mat-form-field>
+			</ion-col>
+		</ion-row>
 		<!-- <ion-row
 			style="margin-top: 10px; margin-bottom: 50px"
 			class="ion-justify-content-center"
