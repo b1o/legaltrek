@@ -4,6 +4,7 @@ import { AuthService } from "../auth.service";
 import { LoginDto } from "../models/loginDto";
 import { Router } from "@angular/router";
 import { Plugins } from "@capacitor/core";
+import { ToastController } from "@ionic/angular";
 
 @Component({
   selector: "app-login",
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private toasts: ToastController
   ) {
     this.loginForm = this.fb.group({
       email: ["danail.stoqnov@gmail.com ", [Validators.required]],
@@ -35,11 +37,26 @@ export class LoginComponent implements OnInit {
 
     if (this.twoFactor) {
       this.auth
-        .twoFactorAuth(this.loginForm.get("twoFactor").value)
-        .subscribe((res) => {
+        .twoFactorAuth({
+          code: this.loginForm.get("twoFactor").value,
+          return_type: "json",
+          modal_email: this.loginForm.get("email").value,
+        })
+        .subscribe(async (res) => {
           console.log(res);
           this.loading = false;
-          if (res) {
+
+          if (res.error) {
+            const toast = await this.toasts.create({
+              message: res.message,
+              color: 'danger',
+              duration: 3000,
+              buttons: [{ text: "OK", role: "cancel" }],
+            });
+            await toast.present();
+            return;
+          }
+          if (res.success) {
             this.router.navigateByUrl("/home/matters");
           }
         });

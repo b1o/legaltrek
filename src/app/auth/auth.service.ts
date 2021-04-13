@@ -30,10 +30,8 @@ export class AuthService {
     });
   }
 
-  public twoFactorAuth(code) {
-    return this.network.post("/api/auth/try_code", {
-      code,
-    });
+  public twoFactorAuth(data) {
+    return this.network.post("/api/auth/try_code", data);
   }
 
   public checkEmail(email: string) {
